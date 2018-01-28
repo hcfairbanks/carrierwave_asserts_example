@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Cats</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Picture Location</th>
+      <th>Picture Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cats.each do |cat| %>
+      <tr>
+        <td>
+          <%= image_tag(cat.picture.thumb, alt: "Cat Thumbnail Picture") %>
+        </td>
+        <td><%= cat.name %></td>
+        <td><%= cat.picture %></td>
+        <td><%= cat.picture_identifier %></td>
+        <td><%= link_to 'Show', cat %></td>
+        <td><%= link_to 'Edit', edit_cat_path(cat) %></td>
+        <td><%= link_to 'Destroy', cat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br/>
+
+<%= link_to "Refresh Cats Index", cats_url %>
+
+<br/>
+
+<h2>Create a new cat here</h2>
+
+<form id='string_image_form' onsubmit="send_docs(this); return false;">
+  <label for="name">Name</label>
+  <input type="text" name="name" id="name">
+  <label for="file">Picture</label>
+  <input type="file" name="file" id="picture">
+  <br/>
+  <input type="submit">
+</form>
