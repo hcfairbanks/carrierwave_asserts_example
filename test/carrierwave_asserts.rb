@@ -7,55 +7,85 @@
 # gem build awesome_gem.gemspec
 # gem install awesome_gem.gemspec
 # add this to a local rails Gemfile
-#   gem 'carrierwave_asserts'
-
-
-
-
+# gem 'carrierwave_asserts'
 
 require 'minitest/assertions'
 require 'rmagick'
 require 'base64'
 
 module Minitest::Assertions
-include Magick
+  include Magick
 
-
-#************************888
-#BROKEN
-
+# BROKEN
 # https://github.com/seattlerb/minitest/issues/730
 # https://chriskottom.com/blog/2014/08/customize-minitest-assertions-and-expectations/
 
+  def assert_have_permissions(file_path,permissions)
+    file_permissions = (File.stat(file_path).mode & 0777).to_s(8)
+    msg = "Expected file permissions #{permissions},
+            actual file permissions #{file_permissions}"
+    assert file_permissions == permissions ? true : false, msg
+  end
 
-def assert_permissions(uploader, permissions)
-  file_permissions = (File.stat(uploader.current_path).mode & 0777).to_s(8)
-  assert_equal(permissions,file_permissions)
-  #assert permissions == file_permissions,
-  #"Expected #{ uploader.identifier } to have permissions #{ permissions }."
-  #assert uploader == permissions, "it worked"
+  def assert_have_dimensions(file_path,width,height)
+    msg = check_width_equal_to(file_path,width)
+    msg += check_height_equal_to(file_path,height)
 
+    assert msg.blank? ? true : false, msg
+  end
 
-end
+  def assert_be_no_larger_than(file_path, width, height)
+    msg = check_width_no_larger_than(file_path,width)
+    msg += check_height_no_larger_than(file_path,height)
+    assert msg.blank? ? true : false, msg
+  end
 
-  # def assert_same_items(expected, actual)
-  #   assert same_items(expected, actual),
-  #     "Expected #{ expected.inspect } and #{ actual.inspect } to have the same items"
-  # end
-  #
-  # #
-  # #  Fails if +expected and +actual have the same items.
-  # #
-  # def refute_same_items(expected, actual)
-  #   refute same_items(expected, actual),
-  #   "Expected #{ expected.inspect } and #{ actual.inspect } would not have the same items"
-  # end
-  #
-  # private
-  #
-  # def same_items(expected, actual)
-  #   actual.is_a?(Enumerable) && expected.is_a?(Enumerable) &&
-  #   expected.count == actual.count && actual.all? { |e| expected.include?(e) }
-  # end
-  #end
+  def assert_format(file_path,file_format)
+    img = Magick::Image.ping( file_path ).first
+    msg = "Expected format #{file_format}, actual format #{img.format}."
+    assert file_format == img.format ? true : false, msg
+  end
+
+  def assert_file_size(file_path,file_size)
+    actual_size = File.size(file_path)
+    msg = "Expected size #{file_size}, actual size #{actual_size}."
+    assert actual_size == file_size ? true : false, msg
+  end
+
+  def assert_file_location(file_path)
+    msg = "File was not found at the expected location #{file_path}."
+    assert File.file?(file_path), msg
+  end
+
+  def assert_identical_files(comparison_file_path,file_path)
+    msg = "File #{file_path} was not identical to #{comparison_file_path}."
+    assert FileUtils.identical?(comparison_file_path,file_path), msg
+  end
+
+  private
+
+  def check_width_no_larger_than(file_path,width)
+    img = Magick::Image.ping( file_path ).first
+    img.columns <= width ? "" : "Expected width to be less than #{width}, "\
+                                  "actual width #{img.columns}. "
+  end
+
+  def check_height_no_larger_than(file_path,height)
+    img = Magick::Image.ping( file_path ).first
+    img.rows <= height ? "" : "Expected height to be less than #{height}, "\
+                                "actual height #{img.rows}."
+  end
+
+  def check_width_equal_to(file_path,width)
+    img = Magick::Image.ping( file_path ).first
+    img.columns == width ? "" : "Expected width #{width}, "\
+                              "actual width #{img.columns}. "
+  end
+
+  def check_height_equal_to(file_path,height)
+    img = Magick::Image.ping( file_path ).first
+    img.rows == height ? "" : "Expected height #{height}, "\
+                                "actual height #{img.rows}."
+  end
+
 end
