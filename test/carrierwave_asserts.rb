@@ -9,16 +9,16 @@
 # add this to a local rails Gemfile
 # gem 'carrierwave_asserts'
 
-require 'minitest/assertions'
-require 'rmagick'
-require 'base64'
-
-module Minitest::Assertions
-  include Magick
-
 # BROKEN
 # https://github.com/seattlerb/minitest/issues/730
 # https://chriskottom.com/blog/2014/08/customize-minitest-assertions-and-expectations/
+
+
+require 'minitest/assertions'
+require 'rmagick'
+
+module Minitest::Assertions
+  include Magick
 
   def assert_have_permissions(file_path,permissions)
     file_permissions = (File.stat(file_path).mode & 0777).to_s(8)
