@@ -1,5 +1,6 @@
 class Cat < ApplicationRecord
 
+  #mount_uploader :picture, PictureUploader
   mount_base64_uploader :picture, PictureUploader
   validates :name, presence: true
   after_destroy :remove_picture_directory
