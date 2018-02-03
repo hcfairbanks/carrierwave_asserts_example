@@ -1,24 +1,38 @@
-# README
+# carrierwave_asserts gem example app
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This app is an example of the minitest carrierwave_assets gem.
 
-Things you may want to cover:
+These additional asserts are modeld after the carrierwave
 
-* Ruby version
+rspec spec helpers. Look at the tests/uploader/picture_uploader_test.rb for ussage of the carrierwave_asserts gem
 
-* System dependencies
+The app requires xxx and xxx
 
-* Configuration
+The can be installed as follows:
+## Installation
 
-* Database creation
+### Dependencies
 
-* Database initialization
+```imagemagick libmagickwand-dev```
 
-* How to run the test suite
+You can install them on ubuntu as follows
 
-* Services (job queues, cache servers, search engines, etc.)
+```sudo apt-get install imagemagick libmagickwand-dev```
 
-* Deployment instructions
 
-* ...
+This app requires the following gems
+
+```
+gem 'carrierwave', '~> 1.0'
+gem 'carrierwave_asserts', git: 'https://github.com/hcfairbanks/carrierwave_asserts'
+gem "rmagick", "~> 2.13.1"
+```
+
+This app was made using the following. The asserts gem may work with other versions.
+ruby version
+Rails 5.1.4
+
+rails version
+ruby 2.4.0p0
+
+after installin the app, run rails test to see the carrierwave_asserts work.

@@ -6,8 +6,11 @@
 </p>
 
 <p>
-  <strong>Picture:</strong>
-  <%= @cat.picture %>
+  <% unless @cat.picture.thumb.blank? %>
+    <%= image_tag(@cat.picture.thumb, alt: "Cat Thumbnail Picture") %>
+  <% else %>
+    <%= image_tag("no_avatar_image_thumb.jpg") %>
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_cat_path(@cat) %> |

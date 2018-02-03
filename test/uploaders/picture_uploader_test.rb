@@ -1,17 +1,25 @@
 require 'test_helper'
 require 'minitest/autorun'
 require 'rmagick'
-require 'base64'
+#require 'base64' # alternative, if you are using base64 uploads
 
 class PictureUploaderTest < ActiveSupport::TestCase
   include Magick
 
+  # Alternative, if you are using base64 uploads gem
+  # setup do
+  #   PictureUploader.enable_processing = true
+  #   file_path = File.join( fixture_path, "files","imgs", "cat_1.jpeg")
+  #   data_url  = "data:image/jpeg;base64,"
+  #   data_url += Base64.encode64(File.open(file_path).read)
+  #   cat = Cat.create(name: 'Mr Snuggles', picture: data_url)
+  #   @uploader = PictureUploader.new(cat, :picture)
+  #   File.open(file_path) { |f| @uploader.store!(f) }
+  # end
+
   setup do
     PictureUploader.enable_processing = true
     file_path = File.join( fixture_path, "files","imgs", "cat_1.jpeg")
-    # data_url  = "data:image/jpeg;base64,"
-    # data_url += Base64.encode64(File.open(file_path).read)
-    # cat = Cat.create(name: 'Mr Snuggles', picture: data_url)
     file_pic = Rack::Test::UploadedFile.new(file_path)
     cat = Cat.create( name: 'Mr Snuggles', picture: file_pic )
     @uploader = PictureUploader.new(cat, :picture)

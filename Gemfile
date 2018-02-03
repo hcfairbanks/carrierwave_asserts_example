@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'carrierwave', '~> 1.0'
-gem 'carrierwave-base64'
+# gem 'carrierwave-base64'
 gem 'carrierwave_asserts', git: 'https://github.com/hcfairbanks/carrierwave_asserts'
 gem "rmagick", "~> 2.13.1"
 gem 'jquery-rails'

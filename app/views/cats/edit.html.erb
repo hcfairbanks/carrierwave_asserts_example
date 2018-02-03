@@ -1,5 +1,12 @@
 <h1>Editing Cat</h1>
 
+<p>
+  <% unless @cat.picture.thumb.blank? %>
+    <%= image_tag(@cat.picture.thumb, alt: "Cat Thumbnail Picture") %>
+  <% else %>
+    <%= image_tag("no_avatar_image_thumb.jpg") %>
+  <% end %>
+</p>
 <%= render 'form', cat: @cat %>
 
 <%= link_to 'Show', @cat %> |
