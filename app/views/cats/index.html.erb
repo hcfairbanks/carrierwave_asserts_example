@@ -17,7 +17,11 @@
     <% @cats.each do |cat| %>
       <tr>
         <td>
-          <%= image_tag(cat.picture.thumb, alt: "Cat Thumbnail Picture") %>
+          <% unless cat.picture.thumb.blank? %>
+            <%= image_tag(cat.picture.thumb, alt: "Cat Thumbnail Picture") %>
+          <% else %>
+            <%= image_tag("no_avatar_image_medium.jpg") %>
+          <% end %>
         </td>
         <td><%= cat.name %></td>
         <td><%= cat.picture %></td>
@@ -32,17 +36,4 @@
 
 <br/>
 
-<%= link_to "Refresh Cats Index", cats_url %>
-
-<br/>
-
-<h2>Create a new cat here</h2>
-
-<form id='string_image_form' onsubmit="send_docs(this); return false;">
-  <label for="name">Name</label>
-  <input type="text" name="name" id="name">
-  <label for="file">Picture</label>
-  <input type="file" name="file" id="picture">
-  <br/>
-  <input type="submit">
-</form>
+<h2>Create a new cat <%= link_to 'here.', new_cat_path() %></h2>

@@ -2,7 +2,9 @@ require 'test_helper'
 
 class CatsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @cat = cats(:one)
+    file_path = File.join( fixture_path, "files","imgs", "cat_1.jpeg")
+    file_pic = Rack::Test::UploadedFile.new(file_path)
+    @cat = Cat.create( name: 'Mr Snuggles', picture: file_pic )
   end
 
   test "should get index" do
