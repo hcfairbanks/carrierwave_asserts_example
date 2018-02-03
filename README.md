@@ -2,7 +2,7 @@
 
 This app is an example of the minitest carrierwave_assets gem.
 
-These additional asserts are modeld after the carrierwave rspec spec helpers.
+These additional asserts are modeld after the carrierwave rspec spec matchers.
 
 Look at the [tests/uploader/picture_uploader_test.rb](https://github.com/hcfairbanks/carrierwave_asserts_example/blob/master/test/uploaders/picture_uploader_test.rb) for ussage of the carrierwave_asserts gem.
 
